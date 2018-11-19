@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/city_weather_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/Light_Sky_Blue"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    android:layout_marginBottom="2dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/small_image_weather"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:background="@color/Sea_Blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.5"
+            tools:src="@drawable/hail" />
+
+        <TextView
+            android:id="@+id/weather_temp1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/Denim_Blue"
+            android:gravity="center"
+            android:textColor="@color/White"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/small_image_weather"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line1"
+            app:layout_constraintWidth_percent="0.5"
+            tools:text="30°" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/Ash_Gray"
+            app:layout_constraintBottom_toTopOf="@+id/city_name1"
+            app:layout_constraintTop_toBottomOf="@id/weather_temp1"
+            app:layout_constraintStart_toEndOf="@+id/small_image_weather"
+            app:layout_constraintWidth_percent="0.5" />
+
+        <TextView
+            android:id="@+id/city_name1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/Jeans_Blue"
+            android:gravity="center"
+            android:textColor="@color/AliceBlue"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/small_image_weather"
+            app:layout_constraintWidth_percent="0.5"
+            tools:text="London" />
+
+        <ImageView
+            android:id="@+id/image_weather"
+            android:layout_width="0dp"
+            android:layout_height="320dp"
+            android:background="@color/Pale_Blue_Lily"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.5"
+            tools:src="@drawable/cloudy_day"
+
+            />
+
+        <TextView
+            android:id="@+id/weather_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/White"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/image_weather"
+            app:layout_constraintTop_toBottomOf="@+id/city_name"
+            tools:text="30°" />
+
+        <TextView
+            android:id="@+id/weather_temp_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/Black_Cat"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/image_weather"
+            app:layout_constraintTop_toBottomOf="@+id/weather_temp"
+            tools:text="Min: 30°" />
+
+        <TextView
+            android:id="@+id/weather_temp_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textColor="@color/Black_Cat"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/image_weather"
+            app:layout_constraintTop_toBottomOf="@+id/weather_temp_min"
+            tools:text="Max: 30°" />
+
+        <TextView
+            android:id="@+id/city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/Black_Eel"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/image_weather"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="London" />
+
+        <TextView
+            android:id="@+id/main_weather"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/SeaShell"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/image_weather"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weather_temp_max"
+            tools:text="Clear"
+            app:layout_constraintWidth_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/image_weather"
+            app:layout_constraintTop_toBottomOf="@+id/main_weather"
+            tools:text="humidity: 75%" />
+
+        <TextView
+            android:id="@+id/wind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/image_weather"
+            app:layout_constraintTop_toBottomOf="@+id/humidity"
+            tools:text="Wind: 1.81 mph" />
+
+        <TextView
+            android:id="@+id/cloud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/image_weather"
+            app:layout_constraintTop_toBottomOf="@+id/wind"
+            tools:text="Clouds: 0" />
+
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/Ash_Gray"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/cloud" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/Iceberg"
+            android:gravity="left"
+            android:padding="10dp"
+            android:textColor="@color/White"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:layout_constraintWidth_percent="0.5"
+            tools:text="2017/2/11" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/Blue_Dress"
+            android:gravity="right"
+            android:padding="10dp"
+            android:textColor="@color/White"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/date"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:layout_constraintWidth_percent="0.5"
+            tools:text="12:00:00" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

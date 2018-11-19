@@ -1,0 +1,22 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="WeatherApp" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/Beer</item>
+        <item name="colorPrimaryDark">@color/Golden_brown</item>
+        <item name="colorAccent">@color/Macaroni_and_Cheese</item>
+    </style>
+    <style name="WeatherApp1" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/Jeans_Blue</item>
+        <item name="colorPrimaryDark">@color/Blue_Angel</item>
+        <item name="colorAccent">@color/Powder_Blue</item>
+    </style>
+</resources>
