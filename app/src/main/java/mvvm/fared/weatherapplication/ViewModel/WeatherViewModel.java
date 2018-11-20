@@ -2,17 +2,16 @@ package mvvm.fared.weatherapplication.ViewModel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
 
-import mvvm.fared.weatherapplication.Model.WeatherRepository;
+import mvvm.fared.weatherapplication.Model.WeatherRepository.WeatherRepository;
+import mvvm.fared.weatherapplication.Model.WeratherAPI.CurrentForecastWeatherModel.Condition;
 import mvvm.fared.weatherapplication.Model.WeratherAPI.CurrentForecastWeatherModel.CurrentForecastWeatherModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,15 +19,14 @@ import retrofit2.Response;
 
 public class WeatherViewModel extends AndroidViewModel {
     private WeatherRepository repository;
-    private String city;
-    private LiveData<List<CurrentForecastWeatherModel>> citiesList;
-    private MutableLiveData<CurrentForecastWeatherModel> myCity;
 
     public WeatherViewModel(@NonNull final Application application) {
         super(application);
-        repository = new WeatherRepository(application, city);
-        myCity = new MutableLiveData<>();
-        if (repository.isNetworkAvailable(application.getApplicationContext())) {
+        repository = new WeatherRepository(application);
+    }
+
+    public void getCitiesWeatherList(final Context context, String city) {
+        if (repository.isNetworkAvailable(context)) {
             deleteAllCities();
             repository.addCityWeather()
                     .getCurrentForecastWeather(city, "7795704a35ca4e32a8482126181811")
@@ -36,32 +34,24 @@ public class WeatherViewModel extends AndroidViewModel {
                         @Override
                         public void onResponse(Call<CurrentForecastWeatherModel> call, Response<CurrentForecastWeatherModel> response) {
                             if (response.isSuccessful()) {
-                                myCity.setValue(response.body());
-                                insert(myCity.getValue());
+                                insert(response.body());
                             } else {
-                                //Toast.makeText(application.getApplicationContext(), response.code()+"", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "The Link Source Error", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<CurrentForecastWeatherModel> call, Throwable t) {
-                            citiesList = getAllCities();
-                            Toast.makeText(application.getApplicationContext(), "Check Network Connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Check Network Connection", Toast.LENGTH_SHORT).show();
                         }
-
-
                     });
 
         } else {
-            citiesList = repository.getAllCities();
-            Toast.makeText(application.getApplicationContext(), "Check Network Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Check Network Connection", Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public void insert(CurrentForecastWeatherModel student) {
         repository.insert(student);
@@ -80,12 +70,9 @@ public class WeatherViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<CurrentForecastWeatherModel>> getAllCities() {
-        return citiesList;
+        return repository.getAllCities();
     }
 
-    public MutableLiveData<CurrentForecastWeatherModel> getMyCity() {
-        return myCity;
-    }
 
 
 }

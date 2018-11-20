@@ -35,9 +35,9 @@ public class CurrentForecastWeatherActivity extends MyBaseActivity {
     RecyclerView recyclerView;
     CitiesWeatherAdapter adapter;
     LinearLayoutManager layoutManager;
-    List<CurrentForecastWeatherModel> weatherForecast;
     WeatherViewModel weatherViewModel;
     SwipeRefreshLayout refreshLayout;
+    List<CurrentForecastWeatherModel> weatherModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,75 +48,51 @@ public class CurrentForecastWeatherActivity extends MyBaseActivity {
         recyclerView = findViewById(R.id.my_weather_recycler);
         refreshLayout = findViewById(R.id.refresh);
         adapter = new CitiesWeatherAdapter();
-        weatherForecast = new ArrayList<>();
+        weatherModelList = new ArrayList<>();
         fillTheRecyclerview();
         whenScroll();
     }
 
     void addCityWeather(String city) {
-        APIManager.getAPIS("http://api.apixu.com/v1/")
-                .getCurrentForecastWeather(city, "7795704a35ca4e32a8482126181811")
-                .enqueue(new Callback<CurrentForecastWeatherModel>() {
-                    @Override
-                    public void onResponse(Call<CurrentForecastWeatherModel> call, Response<CurrentForecastWeatherModel> response) {
-                        adapter.setMyWeatherForecast(response.body());
-                        weatherViewModel.insert(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<CurrentForecastWeatherModel> call, Throwable t) {
-
-                    }
-                });
-        /*weatherViewModel.setCity(city);
-        weatherViewModel.getMyCity().observe(this, new Observer<CurrentForecastWeatherModel>() {
+        weatherViewModel.getCitiesWeatherList(this, city);
+        weatherViewModel.getAllCities().observe(this, new Observer<List<CurrentForecastWeatherModel>>() {
             @Override
-            public void onChanged(@Nullable CurrentForecastWeatherModel currentForecastWeatherModel) {
-                adapter.setMyWeatherForecast(currentForecastWeatherModel);
-
+            public void onChanged(@Nullable List<CurrentForecastWeatherModel> currentForecastWeatherModels) {
+                weatherModelList = currentForecastWeatherModels;
+                adapter.setMyWeatherForecast(weatherModelList);
             }
-        });*/
+        });
+
+
     }
 
     public void whenScroll() {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (isNetworkAvailable(getApplicationContext())) {
-                    adapter.setMyWeatherForecastList(new ArrayList<CurrentForecastWeatherModel>());
-                    weatherViewModel.deleteAllCities();
-                    addCityWeather("egypt");
-                    addCityWeather("paris");
-                    addCityWeather("italy");
-                    addCityWeather("germany");
-                    addCityWeather("holand");
-                    layoutManager = new LinearLayoutManager(getApplicationContext());
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapter);
-                }
+                if (isNetworkAvailable(getApplicationContext()))
+                    fillTheRecyclerview();
                 else
-                    Toast.makeText(activity, "Check Network Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Check the Network", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         refreshLayout.setRefreshing(false);
                     }
-                },3000);
+                }, 3000);
 
             }
         });
     }
 
     public void fillTheRecyclerview() {
-        weatherViewModel.setCity("egypt");
-        if (weatherViewModel.getAllCities() != null) {
+        if (!isNetworkAvailable(this)) {
+            weatherViewModel.getCitiesWeatherList(this, "egypt");
             weatherViewModel.getAllCities().observe(this, new Observer<List<CurrentForecastWeatherModel>>() {
                 @Override
                 public void onChanged(@Nullable List<CurrentForecastWeatherModel> currentForecastWeatherModels) {
-
-                    for (CurrentForecastWeatherModel model : Objects.requireNonNull(currentForecastWeatherModels))
-                        adapter.setMyWeatherForecast(model);
+                    weatherModelList = currentForecastWeatherModels;
+                    adapter.setMyWeatherForecast(weatherModelList);
                 }
             });
         } else {
@@ -125,7 +101,7 @@ public class CurrentForecastWeatherActivity extends MyBaseActivity {
             addCityWeather("paris");
             addCityWeather("italy");
             addCityWeather("germany");
-            addCityWeather("holand");
+            addCityWeather("holanda");
 
         }
 
@@ -171,5 +147,29 @@ public class CurrentForecastWeatherActivity extends MyBaseActivity {
         return false;
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }
 

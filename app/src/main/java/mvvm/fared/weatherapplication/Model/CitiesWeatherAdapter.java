@@ -1,5 +1,6 @@
 package mvvm.fared.weatherapplication.Model;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,21 +19,17 @@ import mvvm.fared.weatherapplication.Model.WeratherAPI.CurrentForecastWeatherMod
 import mvvm.fared.weatherapplication.R;
 
 public class CitiesWeatherAdapter extends RecyclerView.Adapter<CitiesWeatherAdapter.ViewHolder> {
-    List<CurrentForecastWeatherModel> myWeatherForecast;
-    List<ViewHolder> holderList;
+    private List<CurrentForecastWeatherModel> myWeatherForecast;
+    private List<ViewHolder> holderList;
 
     public CitiesWeatherAdapter() {
         holderList = new ArrayList<>();
         myWeatherForecast = new ArrayList<>();
     }
 
-    public void setMyWeatherForecast(CurrentForecastWeatherModel myWeatherForecast) {
-        this.myWeatherForecast.add(myWeatherForecast);
-        notifyDataSetChanged();
-    }
-
-    public void setMyWeatherForecastList(List<CurrentForecastWeatherModel> myWeatherForecast) {
+    public void setMyWeatherForecast(List<CurrentForecastWeatherModel> myWeatherForecast) {
         this.myWeatherForecast = myWeatherForecast;
+        holderList=new ArrayList<>();
         notifyDataSetChanged();
     }
 
@@ -40,17 +37,18 @@ public class CitiesWeatherAdapter extends RecyclerView.Adapter<CitiesWeatherAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_weather_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        holderList.add(holder);
+        ViewHolder holder = new ViewHolder(view);;
         return holder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holderList.add(holder);
                 if (holder.line.getVisibility() != View.VISIBLE) {
                     for (ViewHolder holder : holderList) {
                         holder.wind.setVisibility(View.GONE);
@@ -129,18 +127,18 @@ public class CitiesWeatherAdapter extends RecyclerView.Adapter<CitiesWeatherAdap
         holder.clouds.setText("cloud: " + myWeatherForecast.get(position).getCurrent().getCloud().toString());
         holder.wind.setText("wind: " + myWeatherForecast.get(position).getForecast().getForecastday().get(0).getDay().getMaxwindMph() + "mph");
         String date_time = myWeatherForecast.get(position).getLocation().getLocaltime();
-        String date = "", time = "";
+        StringBuilder date = new StringBuilder();StringBuilder time = new StringBuilder();
         int indx = 0;
         while (indx < date_time.length()) {
             if (date_time.charAt(indx) == ' ') {
                 indx++;
                 break;
             }
-            date += date_time.charAt(indx);
+            date.append(date_time.charAt(indx));
             indx++;
         }
         while (indx < date_time.length()) {
-            time += date_time.charAt(indx);
+            time.append(date_time.charAt(indx));
             indx++;
         }
         holder.time.setText("time: " + time);
